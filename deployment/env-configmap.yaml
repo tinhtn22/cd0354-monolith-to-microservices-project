@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  AWS_BUCKET: project3bucket-tinhtn
+  AWS_PROFILE: default
+  AWS_REGION: us-east-1
+  JWT_SECRET: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRpbmh0bjJAZ21haWwuY29tIiwiaWF0IjoxNzM2MzgzMDI4fQ.VjbTXWwsnzRDTU7bniP3NLaL-RZjEl0paRa2LaWu6ys
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: database-1.crfpf4gs88di.us-east-1.rds.amazonaws.com
+  URL: http://localhost:8100
+  NODE_OPTIONS: --max-old-space-size=2048
+metadata:
+  name: env-config
