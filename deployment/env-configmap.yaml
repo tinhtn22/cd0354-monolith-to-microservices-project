@@ -8,6 +8,6 @@ data:
   POSTGRES_DB: postgres
   POSTGRES_HOST: database-1.crfpf4gs88di.us-east-1.rds.amazonaws.com
   URL: http://localhost:8100
-  NODE_OPTIONS: --max-old-space-size=2048
+  NODE_OPTIONS: --max-old-space-size=8192
 metadata:
   name: env-config
