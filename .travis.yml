@@ -20,7 +20,7 @@ script:
   - docker tag udagram-frontend tinhtn/udagram-frontend:latest
   - docker tag reverseproxy tinhtn/reverseproxy:latest
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 ## Push
   - docker push tinhtn/udagram-api-feed
   - docker push tinhtn/udagram-api-user
