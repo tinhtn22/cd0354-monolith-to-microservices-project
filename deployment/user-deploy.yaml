@@ -23,7 +23,7 @@ spec:
             memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
             cpu: "500m"
         env:
         - name: URL
@@ -71,6 +71,11 @@ spec:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_USERNAME
+        - name: NODE_OPTIONS
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: NODE_OPTIONS
         volumeMounts:
         - name: aws-secret
           mountPath: "/root/.aws/"
