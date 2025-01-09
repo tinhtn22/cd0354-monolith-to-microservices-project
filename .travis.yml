@@ -1,16 +1,20 @@
 language: minimal
-services: docker
-env:
-  - DOCKER_COMPOSE_VERSION=2.31.0
-before_install:
-  - docker -v && docker-compose -v
-  - sudo rm /usr/local/bin/docker-compose
-  - sudo curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin
-  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  - chmod +x ./kubectl
-  - sudo mv ./kubectl /usr/local/bin/kubectl
+services: 
+  - docker
 
-install:
-  - docker-compose -f docker-compose-build.yaml build --parallel
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker-compose -f docker-compose-build.yaml push
+script:
+  - docker build -t udagram-api-feed:latest ./udagram-api-feed
+  - docker build -t udagram-api-user:latest ./udagram-api-user
+  - docker build -t udagram-frontend:latest ./udagram-frontend
+  - docker build -t reverseproxy:latest ./udagram-reverseproxy
+  - docker tag -t udagram-api-feed:latest tinhtn/udagram-api-feed
+  - docker tag -t udagram-api-user:latest tinhtn/udagram-api-user
+  - docker tag -t udagram-frontend:latest tinhtn/udagram-frontend
+  - docker tag -t reverseproxy:latest tinhtn/reverseproxy
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push tinhtn/udagram-api-feed:latest
+  - docker push tinhtn/udagram-api-user:latest
+  - docker push tinhtn/udagram-frontend:latest
+  - docker push tinhtn/reverseproxy:latest
