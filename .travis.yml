@@ -16,3 +16,17 @@ install:
   - docker-compose -f docker-compose-build.yaml build --parallel
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker-compose -f docker-compose-build.yaml push
+
+script:
+  - docker --version
+  - docker build -f udagram-api-feed/Dockerfile -t  tinhtn/udagram-api-feed:latest udagram-api-feed
+  - docker build -f udagram-api-user/Dockerfile -t  tinhtn/udagram-api-user:latest udagram-api-user
+  - docker build -f udagram-frontend/Dockerfile -t  tinhtn/udagram-frontend:latest udagram-frontend
+  - docker build -f udagram-reverseproxy/Dockerfile -t  tinhtn/reverseproxy:latest reverseproxy
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push tinhtn/udagram-api-feed:latest
+  - docker push tinhtn/udagram-api-user:latest
+  - docker push tinhtn/udagram-frontend:latest
+  - docker push tinhtn/reverseproxy:latest
